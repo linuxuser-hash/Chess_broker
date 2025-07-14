@@ -5,6 +5,10 @@
 
 🇬🇧 OSINT tool for chess account.
 ---
+## Mise a jour
+
+- Ajout verif l'email de la cible
+---
 
 ## 🔍 Fonctionnalités
 
