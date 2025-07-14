@@ -64,3 +64,4 @@ pip install -r requierments.txt --break-system-packages
 # Créer un environnement virtuel (recommandé)
 python3 -m venv venv
 source venv/bin/activate
+pip install -r requierments.txt
