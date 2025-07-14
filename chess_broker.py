@@ -32,7 +32,7 @@ if joined:
     
 
 if response.status_code == 200:
-    print(f"mail : {mail}")
+    print(f"\nmail : {mail}")
     print(f"Has a social login : {hasSocialLogin}")
     print(f"Has a email password : {hasEmailPassword}")
     print(f"\nNom d'utilisateur : {data.get('username')}")
