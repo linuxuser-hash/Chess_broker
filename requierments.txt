@@ -1,10 +1,5 @@
 requests
 datetime
 art
-os
-httpx
-asyncio
 ghunt
-sys
 holehe
-trio
