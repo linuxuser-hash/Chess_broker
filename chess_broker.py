@@ -1,6 +1,13 @@
 import requests
 from datetime import datetime
 from art import *
+import os
+import httpx
+import asyncio
+import sys
+from ghunt.helpers.gmail import is_email_registered
+import trio
+from holehe.modules.social_media.snapchat import snapchat
 
 tprint("chess broker",font="random")
 print("Created by linuxuser-hash")
@@ -16,7 +23,7 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
     "Cookie": "visitorid=%3A333d%3Affff%3A88.122.200.125",
 }
-response = requests.get(url,url2,headers=headers)
+response = requests.get(url,headers=headers)
 response2 = requests.get(url2,headers=headers)
 data = response.json()
 data2 = response2.json()
@@ -35,7 +42,7 @@ if response.status_code == 200:
     print(f"\nmail : {mail}")
     print(f"Has a social login : {hasSocialLogin}")
     print(f"Has a email password : {hasEmailPassword}")
-    print(f"\nNom d'utilisateur : {data.get('username')}")
+    print(f"Nom d'utilisateur : {data.get('username')}")
     print(f"Country : {data.get('country')}")
     print(f"Avatar : {data.get('avatar')}")
     print(f"joined : {date_joined}")
@@ -60,7 +67,25 @@ else:
   data3 = response3.json()
   isEmailAvailable = data3.get("isEmailAvailable", True)
   
+async def check_google(email):
+    async with httpx.AsyncClient() as as_client:
+        return await is_email_registered(as_client, email)
+
+def check_snapchat(email: str) -> list[str]:
+    async def _runner() -> list[str]:
+        out: list[str] = []
+        async with httpx.AsyncClient() as client:
+            await snapchat(email, client, out)
+        return out
+        return trio.run(_runner)
+        
+
+  
 if isEmailAvailable is False:
+   is_registered = asyncio.run(check_google(mail_cibler))
+   snap_out = check_snapchat(mail_cibler)
+   print("Snapchat :", snap_out if snap_out else "Aucun compte detecter")
+   print("Registered on Google :", is_registered)
    print("Cette email est connecter a chess mais mais ce n'est pas sure que c'est l'email de la cible !!!")
    print("Bye !!!")
 else:
